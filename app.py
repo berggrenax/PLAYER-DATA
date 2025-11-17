@@ -1,5 +1,3 @@
-# app.py
-# Kör: streamlit run app.py
 
 import re
 import unicodedata
@@ -11,16 +9,14 @@ from pandas.api.types import is_numeric_dtype
 import gspread
 from google.oauth2.service_account import Credentials
 
-# ----------------------- SIDKONFIG -----------------------
-st.set_page_config(page_title="PLAYER DATA", layout="wide")
-st.title("PLAYER DATA")
+
 
 # ---- SIMPLE PASSWORD PROTECTION ----
-import streamlit as st
-
 APP_PASSWORD = st.secrets["APP_PASSWORD"]
 
 def check_password():
+    st.title("PLAYER DATA")     # <-- LÄGG TITELN HÄR (INNAN STOP)
+
     if "logged_in" not in st.session_state:
         st.session_state.logged_in = False
 
@@ -41,6 +37,8 @@ if not check_password():
     st.stop()
 # ---- END PASSWORD PROTECTION ----
 
+# ----------------------- SIDKONFIG -----------------------
+st.set_page_config(page_title="PLAYER DATA", layout="wide")
 # ----------------------- HJÄLPFUNKTIONER -----------------------
 def _norm(s: str) -> str:
     if s is None:
