@@ -13,30 +13,14 @@ import plotly.graph_objects as go
 import gspread
 from google.oauth2.service_account import Credentials
 
-# ----------------------- SIDKONFIG -----------------------
-st.set_page_config(page_title="MATCH DASHBOARD", layout="wide")
+# ----------------------- SIDKONFIG / HEADER -----------------------
 st.title("MATCH DASHBOARD")
 
-# ----------------------- LÖSENORD -----------------------
-APP_PASSWORD = st.secrets["APP_PASSWORD"]
-
-def check_password():
-    if "logged_in" not in st.session_state:
-        st.session_state.logged_in = False
-    if st.session_state.logged_in:
-        return True
-    pw = st.text_input("🔐 Ange lösenord:", type="password", key="match_pw")
-    if st.button("Logga in", key="match_login_btn"):
-        if pw == APP_PASSWORD:
-            st.session_state.logged_in = True
-            return True
-        else:
-            st.error("Fel lösenord")
-    return False
-
-if not check_password():
+# ----------------------- KONTROLLERA INLOGGNING -------------------
+# Använd samma flagga som sätts i app.py
+if not st.session_state.get("logged_in", False):
+    st.warning("Du måste logga in på huvudsidan först.")
     st.stop()
-
 # ----------------------- HJÄLPARE -----------------------
 def _norm(s: str) -> str:
     if s is None:

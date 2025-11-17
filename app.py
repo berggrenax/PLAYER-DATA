@@ -1,34 +1,45 @@
-
 import re
 import unicodedata
-import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 from pandas.api.types import is_numeric_dtype
 import gspread
 from google.oauth2.service_account import Credentials
+import streamlit as st
 
-st.write("STARTAR APP…")
-
+# ----------------------- SIDKONFIG -----------------------
+# Måste vara första Streamlit-anropet
+st.set_page_config(page_title="PLAYER DATA", layout="wide")
 
 # ---- SIMPLE PASSWORD PROTECTION ----
-APP_PASSWORD = st.secrets["APP_PASSWORD"]
 
-def check_password():
-    st.title("PLAYER DATA")     # <-- LÄGG TITELN HÄR (INNAN STOP)
+def _get_app_password() -> str:
+    # Om APP_PASSWORD saknas eller är fel → visa fel istället för vit sida
+    try:
+        return st.secrets["APP_PASSWORD"]
+    except Exception:
+        st.error(
+            'APP_PASSWORD saknas eller är fel i secrets.\n\n'
+            'Gå till "Edit secrets" i Streamlit Cloud och lägg in t.ex:\n\n'
+            'APP_PASSWORD = "ditt_lösenord"'
+        )
+        st.stop()
 
-    if "logged_in" not in st.session_state:
-        st.session_state.logged_in = False
+APP_PASSWORD = _get_app_password()
 
-    if st.session_state.logged_in:
+def check_password() -> bool:
+    st.title("PLAYER DATA")
+
+    # redan inloggad?
+    if st.session_state.get("logged_in", False):
         return True
 
     password = st.text_input("Ange lösenord:", type="password")
     if st.button("Logga in"):
         if password == APP_PASSWORD:
             st.session_state.logged_in = True
-            return True
+            st.experimental_rerun()  # ladda om sidan som inloggad
         else:
             st.error("Fel lösenord")
 
@@ -36,6 +47,7 @@ def check_password():
 
 if not check_password():
     st.stop()
+
 # ---- END PASSWORD PROTECTION ----
 
 # ----------------------- SIDKONFIG -----------------------
