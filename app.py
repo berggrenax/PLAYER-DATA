@@ -9,6 +9,7 @@ from pandas.api.types import is_numeric_dtype
 import gspread
 from google.oauth2.service_account import Credentials
 
+st.write("STARTAR APP…")
 
 
 # ---- SIMPLE PASSWORD PROTECTION ----
