@@ -11,8 +11,10 @@ from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="PLAYER DATA", layout="wide")
 st.title("PLAYER DATA")
 
-st.sidebar.page_link("app.py", label="Start")
+st.sidebar.header("Sidor")
 st.sidebar.page_link("pages/matchdata.py", label="Matchdata")
+
+
 
 # ---- Lösenord ----
 APP_PASSWORD = st.secrets.get("APP_PASSWORD", None)
