@@ -11,9 +11,21 @@ from google.oauth2.service_account import Credentials
 st.set_page_config(page_title="PLAYER DATA", layout="wide")
 st.title("PLAYER DATA")
 
+# -------------------- NAVIGATION --------------------
 st.sidebar.header("Sidor")
-st.sidebar.page_link("pages/matchdata.py", label="Matchdata")
 
+page = st.sidebar.radio(
+    "Välj sida:",
+    ["Start", "Matchdata"]
+)    
+if page == "Start":
+    st.write("spelardata")
+    # --> här är din befintliga scatterplot/leaderboard-kod
+
+elif page == "Matchdata":
+    # importera matchdata-sidan och kör den
+    import pages.matchdata
+    pages.matchdata.render()
 
 
 # ---- Lösenord ----
