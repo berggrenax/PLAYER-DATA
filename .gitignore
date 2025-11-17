@@ -1,0 +1,16 @@
+# Ignore Streamlit secrets
+.streamlit/secrets.toml
+
+# Ignore Streamlit folder except config
+.streamlit/
+
+# Ignore virtual environments
+.venv/
+venv/
+
+# Ignore caches
+__pycache__/
+*.pyc
+
+# Ignore macOS junk
+.DS_Store
